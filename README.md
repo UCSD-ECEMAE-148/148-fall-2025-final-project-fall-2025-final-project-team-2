@@ -189,6 +189,27 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 </div>
 <hr>
 
+## Water Cannon Design Choice
+
+We chose to use a water cannon from a electronic squirt gun because it was a budget-friendly option that already included everything we needed to perform the task, such as:
+- a strong pump  
+- a built-in water tank  
+- a compact design for easy mobility  
+
+To protect the electronics, we kept the water tank in the trunk of the car so any leaks or spills wouldn’t risk shorting components.
+
+## Mounting and Rotation Mechanism
+
+We used a simple 3D-printed design to hold the water cannon securely, then the servo was mounted in a grove on the underside of the water cannon bracket to allow for it    x-position movement.
+
+The baseplate layout was planned to leave:
+- enough space on top for the servo mount  
+- room for the targeting mechanism  
+
+## Steering Lock for Accuracy
+
+To prevent the cannon from drifting off-target, we detached the car’s steering servo and locked it in place. This ensured there were no unintended direction changes while firing.
+
 ## Gantt Chart
 
 
