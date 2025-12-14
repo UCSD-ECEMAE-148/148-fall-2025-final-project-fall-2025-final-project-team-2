@@ -1,3 +1,5 @@
+<div align="center">
+  <img src="Media/IMG_9348.jpg" height="500">
 <div align="center">Autonomous Firefighter Robot</div>
 <div align="center">ROS2-Based Perception, Decision-Making and Fire Suppression</div>
 <div align="center">Final Robotics Project</div>
