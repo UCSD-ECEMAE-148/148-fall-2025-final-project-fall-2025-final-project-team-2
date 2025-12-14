@@ -102,63 +102,238 @@ The robot utilizes ROS2 as its foundational architecture with an OAK-D Lite came
 <hr>
 
 ## Software
+
 ### Overall Architecture
-This project was developed in ROS2 using a modular pipeline:
 
-- Perception Node: camera frame → window ROIs → intensity estimation → fire-node list  
-- Decision Node: fire-node list → cost minimization → next target selection  
-- Turret Node: target selection + pixel location → turret yaw command → servo PWM  
+This project was developed in ROS2 using a modular pipeline that cleanly separates perception, decision-making, and hardware. Each stage runs as an independent ROS2 node and is communicated exclusively through topics allowing the system to be sequential.
 
-A typical ROS2 topic flow:
+The system will execute and repeat this sequence:
 
-- `/camera/image` → perception  
-- `/fire_nodes` → decision  
-- `/target_fire` + `/target_pixel` → turret  
-- `/servo_cmd` → servo driver
+see → decide → servo → drivetrain → fire
 
-### Fire Perception
-We detect “fires” on a cardboard building by analyzing each window region in the camera image.
+---
+
+## ROS 2 Node-Level Architecture
+
+<>
+
+---
+
+### HSV Window Labeling
+
+Heat is determined through the amount of red and orange pixels. More red indicates hotter temperate and more orange indicates cooler temperatures. There is a black box that will show there is a person present in the window. The mock building made of cardboard will have these variables present and the HSV Window Labeling will output those live variables to a matrix with window id, fire intensity, neighbors fire intensity, person present boolean.
+
+---
 
 **ROI-based window extraction**
+
 - A calibration step defines fixed window bounding boxes (ROIs).
 - Each incoming frame is cropped into per-window patches.
 - Each patch is resized and normalized.
 
+---
+
 **Intensity estimation**
- **Baseline (color-based):**  
-   - Convert ROI to HSV or La for improved robustness to lighting changes.  
-   - Compute a “redness score” and map it to a temperature index.
+
+**Baseline (color-based):**
+
+- Convert ROI to HSV or La for improved robustness to lighting changes.
+- Compute a red/orange intensity score based on hue and saturation thresholds.
+- Map this score to a normalized temperature or fire intensity index.
+
+---
 
 **Output message**
-The perception node publishes a list of fire nodes:
-- window ID
-- temperature / intensity
-- neighbor temperatures (or a neighbor-influence term)
-- timestamp
 
-  
+The HSV Window Labeling library publishes a structured list of detected fire windows:
+
+- window ID – lists windows in matrix order
+- temperature / intensity – determined through the amount of orange and red (outputted as a 3x3 matrix correlated with the window ID)
+- Boolean Person matrix – 3x3 matrix, 1 indicated that there is a person, 0 otherwise
+
+---
+
 ### Decision-Making & Task Planning
-We represent each window as a graph. Each node contains:
+
+The decision-making library will input the matrix form the fire perception node, applying the formula (indicated below)and then outputting the window with the highest cost, needing to be extinguished first. The input matrix contains:
+
 - `id`
 - current temperature `T`
 - neighbor influence `N(T)`
 - optional growth model parameter `α`
 
-At each iteration, the decision node selects the next window to extinguish by minimizing a custom cost:
+At each iteration, the function selects the next window to extinguish by minimizing a custom cost:
 
 - balance between:
   - travel cost (distance/time),
   - fire urgency (temperature),
   - cluster effects (neighbor influence),
-  - predicted growth over time.
-  - presence or not of a personn 
+  - predicted growth over time,
+  - presence or not of a person
 
-The selected target is published as:
-- `/target_fire` (target ID, metadata)
-- `/target_pixel` (pixel coordinates for aiming, if provided by perception)
+This is the equation:
 
-### Turret Aiming & Water Cannon Control
+$$
+\text{cost} =
+w_1 \cdot \text{travel\_cost}
++ w_2 \cdot \text{fire\_intensity}
++ w_3 \cdot \text{neighbor\_influence}
++ w_4 \cdot \text{predicted\_growth}
++ w_5 \cdot \text{safety\_penalty}
+$$
+
+
+---
+
+### Fire_Dection_Node
+
+The Fire Detection Node is responsible for converting raw camera images into a structured, decision-ready representation of the fire activity across the building. It serves as the interface between perception and decision-making, encapsulating fire detection, temperature estimation, reasoning, and debugging visualization.
+
+This node performs three tightly integrated functions:
+
+- Camera Input Processing
+- HSV window labeling & Temperature Estimation
+- Target Selection & Debug Matrix Generation
+
+The output topics:
+
+- Best_window → the window id of the current highest priority window
+- Debug information
+
+---
+
+### Servo Node
+
 Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret base, fixed to the chassis.
+
+---
+
+## System Operation and Communication
+
+The servo’s horizontal motion is controlled using the Arduino’s built-in **Servo library**, which sets the servo angle by outputting the appropriate **PWM signal**.
+
+To activate the water cannon, the Arduino sends a **digital control signal** to a **relay**, which acts like an electronic switch—when triggered, it allows power to flow to the water cannon so it can fire.
+
+The **Raspberry Pi** and **Arduino** communicate using **serial (UART) communication**. In this setup, the Raspberry Pi sends commands (such as 0–8 the windows label or “fire”) over the serial connection, and the Arduino interprets those commands and performs the real-time hardware actions (servo positioning and relay switching).
+
+This division of roles keeps the Raspberry Pi protected from motor/relay electrical noise while allowing the Arduino to handle the precise timing needed for servo control and reliable firing.
+
+**Summary:**
+
+Subscribe to:
+- `/servo_serial` (Int32)
+- `/fire_command` (Bool)
+
+Interacts with:
+- Arduino via `/dev/serial/...` (USB)
+
+Sends:
+- Servo angle commands (window index)
+- FIRE command
+
+<hr>
+
+---
+
+### VESC Node
+
+The **VESC node** acts as the main **motor driver interface** in our ROS2 system. It serves as the software bridge between ROS and the physical drivetrain hardware controlled by the VESC.
+
+---
+
+## Command Input (Subscribing to Motion Topics)
+
+The best_window topic determines the target row, which requires movement either forward, backward, or idle. The VESC node listens to those motion commands published by `/cmd_vel`.
+
+---
+
+## Command Translation (ROS → VESC Control)
+
+Once a command is received, the VESC node converts the ROS message into the low-level control signals that the VESC understands. This is what allows high-level ROS navigation or control logic to directly drive the motor without needing to handle hardware-level details.
+
+---
+
+## Feedback Output (State and Odometry Publishing)
+
+In addition to sending commands, the VESC node publishes feedback data back into ROS such as motor speed, voltage, current draw, and/or **odometry**. This feedback helps the system confirm the drivetrain is responding correctly and track how far the robot has moved.
+
+---
+
+## Why This Matters
+
+By separating motion commands from hardware control, the VESC node makes the drivetrain easier to control and debug. Other ROS nodes can focus on decision-making while the VESC node handles reliable motor execution and feedback. Therefore handles the forward and backward movement of the car needed for aiming the row.
+
+---
+
+### Brain Node
+
+The Brain Node is the central decision-making and coordination node of the system. It acts as the bridge between fire perception and the hardware, ensuring that all actions occur in the correct order and without conflict.
+
+Rather than continuously commanding hardware, the Brain Node operates as a finite state machine (FSM) that executes a single fire-suppression cycle at a time.
+
+Its responsibilities are to:
+- Receive the best_window_id
+- Coordinate turret aiming, base motion, and firing system
+- Signal when the cycle is complete so perception may resume
+
+Subscribe topic:
+- `/best_target_window` (Int32)
+
+Publishes topics:
+- `/servo_serial_node` (Int32)
+- `/cmd_vel` (Twist)
+- `/fire_command` (Bool)
+- `/cycle_complete` (Bool)
+
+---
+
+### Internal State Machine
+
+The Brain Node is implemented as a finite state machine to guarantee correct sequencing and prevent unsafe behavior.
+
+**State Definitions**
+
+- IDLE – Waiting for a valid fire target
+- AIM_TURRET – Rotate turret toward target window
+- MOVE_BASE – Move robot to align with target row
+- FIRE – Activate water cannon
+- RESET – Stop motion and unlock next cycle
+
+---
+
+**Execution Logic**
+
+1. **Target Acquisition (IDLE)**  
+   The Brain Node waits for `/best_target_window`.  
+   Once received, it:
+   - Validates the window index
+   - Stores temperature and metadata
+   - Locks the system to prevent new targets
+
+2. **Turret Aiming (AIM_TURRET)**  
+   - Converts the window index into a target column  
+   - Publishes `/servo_serial_node` with the desired turret position  
+   - Waits a fixed settling time to allow servo stabilization  
+   - Prevents firing while the turret is still moving
+
+3. **Base Alignment (MOVE_BASE)**  
+   - Converts the window index into a target row  
+   - Publishes `/cmd_vel` to move the robot forward or backward  
+   - Uses time-based or distance-based motion control  
+   - Stops motion once alignment is achieved
+
+4. **Fire Command (FIRE)**  
+   - Publishes `/fire_command = true`  
+   - Holds the command long enough to ensure actuation  
+   - Immediately resets `/fire_command` to false  
+
+5. **Reset & Unlock (RESET)**  
+   - Publishes `/cycle_complete = true`  
+   - Clears internal state variables  
+   - Returns to IDLE  
+
+At this point, the perception node is allowed to process the next frame.
+
 
 <hr>
 
