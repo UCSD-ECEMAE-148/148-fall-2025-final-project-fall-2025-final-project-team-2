@@ -1,0 +1,3 @@
+[console_scripts]
+turret_servo_node = turret_servo_pkg.turret_servo_node:main
+

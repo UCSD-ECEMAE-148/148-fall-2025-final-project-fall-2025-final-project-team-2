@@ -1,0 +1,37 @@
+[0.925s] Invoking command in '/home/projects/ros2_ws/src/turret_servo_pkg': PYTHONPATH=/home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/turret_servo_pkg build --build-base /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build install --prefix /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg --record /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/install.log --single-version-externally-managed
+[1.218s] running egg_info
+[1.220s] creating build/turret_servo_pkg/turret_servo_pkg.egg-info
+[1.220s] writing build/turret_servo_pkg/turret_servo_pkg.egg-info/PKG-INFO
+[1.220s] writing dependency_links to build/turret_servo_pkg/turret_servo_pkg.egg-info/dependency_links.txt
+[1.220s] writing entry points to build/turret_servo_pkg/turret_servo_pkg.egg-info/entry_points.txt
+[1.221s] writing requirements to build/turret_servo_pkg/turret_servo_pkg.egg-info/requires.txt
+[1.221s] writing top-level names to build/turret_servo_pkg/turret_servo_pkg.egg-info/top_level.txt
+[1.224s] writing manifest file 'build/turret_servo_pkg/turret_servo_pkg.egg-info/SOURCES.txt'
+[1.260s] reading manifest file 'build/turret_servo_pkg/turret_servo_pkg.egg-info/SOURCES.txt'
+[1.261s] writing manifest file 'build/turret_servo_pkg/turret_servo_pkg.egg-info/SOURCES.txt'
+[1.261s] running build
+[1.261s] running build_py
+[1.261s] creating /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build
+[1.261s] creating /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build/lib
+[1.262s] creating /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build/lib/turret_servo_pkg
+[1.262s] copying turret_servo_pkg/__init__.py -> /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build/lib/turret_servo_pkg
+[1.262s] copying turret_servo_pkg/turret_servo_node.py -> /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build/lib/turret_servo_pkg
+[1.262s] running install
+[1.263s] running install_lib
+[1.265s] creating /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages/turret_servo_pkg
+[1.265s] copying /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build/lib/turret_servo_pkg/__init__.py -> /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages/turret_servo_pkg
+[1.265s] copying /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build/lib/turret_servo_pkg/turret_servo_node.py -> /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages/turret_servo_pkg
+[1.266s] byte-compiling /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages/turret_servo_pkg/__init__.py to __init__.cpython-38.pyc
+[1.267s] byte-compiling /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages/turret_servo_pkg/turret_servo_node.py to turret_servo_node.cpython-38.pyc
+[1.268s] running install_data
+[1.269s] creating /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/share/ament_index
+[1.269s] creating /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/share/ament_index/resource_index
+[1.269s] creating /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/share/ament_index/resource_index/packages
+[1.269s] copying resource/turret_servo_pkg -> /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/share/ament_index/resource_index/packages
+[1.269s] copying package.xml -> /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/share/turret_servo_pkg
+[1.269s] running install_egg_info
+[1.274s] Copying build/turret_servo_pkg/turret_servo_pkg.egg-info to /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages/turret_servo_pkg-0.0.0-py3.8.egg-info
+[1.276s] running install_scripts
+[1.299s] Installing turret_servo_node script to /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/turret_servo_pkg
+[1.300s] writing list of installed files to '/home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/install.log'
+[1.344s] Invoked command in '/home/projects/ros2_ws/src/turret_servo_pkg' returned '0': PYTHONPATH=/home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/turret_servo_pkg build --build-base /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/build install --prefix /home/projects/ros2_ws/src/turret_servo_pkg/install/turret_servo_pkg --record /home/projects/ros2_ws/src/turret_servo_pkg/build/turret_servo_pkg/install.log --single-version-externally-managed
