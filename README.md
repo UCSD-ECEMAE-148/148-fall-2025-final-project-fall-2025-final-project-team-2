@@ -44,7 +44,7 @@
 - **Natan Beneviste** — Mechanical Engineering
 - **Vivan Tran** — Computer Engineering
 - **Tanguy His** — Robotics Engineering
-- **Shanil Patel** - Aerospace Enigineering
+- **Shanil Patel** — Aerospace Enigineering
 
 <hr>
 
