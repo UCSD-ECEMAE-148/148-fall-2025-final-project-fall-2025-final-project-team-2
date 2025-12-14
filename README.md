@@ -176,8 +176,6 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 </div>
 <div align="left">
   <img src="Media/ServoMount.png" height="500">
-</div>
-<div align="right">
   <img src="Media/ServoHornAttachment.png" height="500">
 </div>
 <hr>
