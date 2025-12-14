@@ -1,4 +1,4 @@
-<h1 align="center">Autonomous Firefighter Robot</h1>
+<h1 align="center">Autonomous FireFighting Robot</h1>
 <h3 align="center">ROS 2–Based Perception, Decision-Making, and Fire Suppression</h3>
 <h4 align="center">Final Robotics Project</h4>
 
@@ -115,7 +115,9 @@ see → decide → servo → drivetrain → fire
 
 ## ROS 2 Node-Level Architecture
 
-<>
+<div align="center">
+  <img src="Media/Codearchitecture.png" height="420">
+</div>
 
 ---
 
