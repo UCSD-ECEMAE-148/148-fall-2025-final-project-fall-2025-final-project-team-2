@@ -186,6 +186,10 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 
 ## Gantt Chart
 
+
+ <div align="center">
+  <img src="Media/Gantt_chartt.png" height="500">
+</div>
 <hr>
 
 ## Course Deliverables
