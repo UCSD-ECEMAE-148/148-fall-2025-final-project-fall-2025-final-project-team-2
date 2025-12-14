@@ -160,7 +160,6 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 
 **Sensors**
 - OAK-D Lite RGB-D camera
-- 
 **Actuation**
 - 1x servo motor
 - water pump / solenoid valve
