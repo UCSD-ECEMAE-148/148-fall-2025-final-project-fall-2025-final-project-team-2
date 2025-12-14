@@ -99,6 +99,7 @@ The robot utilizes ROS2 as its foundational architecture with an OAK-D Lite came
 
 ## Final Project Videos
 
+Final project demonstration: https://youtube.com/shorts/yiU66X_UAJ0
 <hr>
 
 ## Software
