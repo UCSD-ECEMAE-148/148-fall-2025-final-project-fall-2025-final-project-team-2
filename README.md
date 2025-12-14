@@ -198,10 +198,6 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 ## Course Deliverables
 
 
-- Demo video links
-- Documentation links
-- Weekly updates
-
 <hr>
 
 ## Project Reproduction
