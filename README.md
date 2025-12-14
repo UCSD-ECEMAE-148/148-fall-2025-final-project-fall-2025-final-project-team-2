@@ -168,7 +168,10 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 **Power**
 - 4S LiPo battery
 - Dedicated DC-DC converters (logic 5V separated from high-current actuators)
-- anti-spark voltage monitoring (recommended)
+- anti-spark voltage monitoring
+  <div align="center">
+  <img src="Media/wiring_diagram.png" height="500">
+</div>
 
 **Mechanical**
 - Cardboard mock building with painted metal “windows”
