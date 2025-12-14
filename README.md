@@ -205,13 +205,13 @@ The output topics:
 
 ---
 
-### Servo Node
+## Servo Node
 
 Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret base, fixed to the chassis.
 
 ---
 
-## System Operation and Communication
+### System Operation and Communication
 
 The servo’s horizontal motion is controlled using the Arduino’s built-in **Servo library**, which sets the servo angle by outputting the appropriate **PWM signal**.
 
