@@ -199,7 +199,10 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 
 ## Course Deliverables
 
-
+* Functionnal car: https://youtu.be/cYO1r23sewk
+* Deep learning laps: https://youtu.be/hFGpkKaZCqE
+* GPS laps : https://youtu.be/9ZRp8OY7T6o
+* Opencv lane following: https://youtu.be/XaypVPjqVfU
 <hr>
 
 ## Project Reproduction
