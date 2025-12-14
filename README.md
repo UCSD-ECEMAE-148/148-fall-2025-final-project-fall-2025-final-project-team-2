@@ -81,7 +81,7 @@ The robot utilizes ROS2 as its foundational architecture with an OAK-D Lite came
   - Implemented next-target selection using a custom score formulation (distance + intensity + neighbor effects + presence of a person at the window).
 - **Turret Control Node**
   - Implemented camera-based aiming for a 1-DOF turret.
-  - Implemented drivetrain contorl for y-position movement  m
+  - Implemented drivetrain control for y-position movement  
   - Implemented servo PWM output with limits.
 
 <hr>
@@ -123,7 +123,9 @@ see → decide → servo → drivetrain → fire
 ---
 
 ### HSV Window Labeling
-
+<div align="center">
+  <img src="Media/detection.png" height="420">
+</div>
 Heat is determined through the amount of red and orange pixels. More red indicates hotter temperate and more orange indicates cooler temperatures. There is a black box that will show there is a person present in the window. The mock building made of cardboard will have these variables present and the HSV Window Labeling will output those live variables to a matrix with window id, fire intensity, neighbors fire intensity, person present boolean.
 
 ---
@@ -158,12 +160,7 @@ The HSV Window Labeling library publishes a structured list of detected fire win
 
 ### Decision-Making & Task Planning
 
-The decision-making library will input the matrix form the fire perception node, applying the formula (indicated below)and then outputting the window with the highest cost, needing to be extinguished first. The input matrix contains:
-
-- `id`
-- current temperature `T`
-- neighbor influence `N(T)`
-- optional growth model parameter `α`
+The decision-making library will input the matrix form the HSW Window Labeling, applying the formula (indicated below) and then outputting the window with the highest cost, needing to be extinguished first. 
 
 At each iteration, the function selects the next window to extinguish by minimizing a custom cost:
 
@@ -176,15 +173,11 @@ At each iteration, the function selects the next window to extinguish by minimiz
 
 This is the equation:
 
-$$
-\text{cost} =
-w_1 \cdot \text{travel\_cost}
-+ w_2 \cdot \text{fire\_intensity}
-+ w_3 \cdot \text{neighbor\_influence}
-+ w_4 \cdot \text{predicted\_growth}
-+ w_5 \cdot \text{safety\_penalty}
-$$
-
+cost = w1 · travel_cost
+     + w2 · fire_intensity
+     + w3 · neighbor_influence
+     + w4 · predicted_growth
+     + w5 · safety_penalty
 
 ---
 
@@ -203,13 +196,14 @@ The output topics:
 - Best_window → the window id of the current highest priority window
 - Debug information
 
+<div align="center">
+  <img src="Media/matrix.png" height="420">
+</div>
 ---
 
 ## Servo Node
 
 Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret base, fixed to the chassis.
-
----
 
 ### System Operation and Communication
 
@@ -224,49 +218,40 @@ This division of roles keeps the Raspberry Pi protected from motor/relay electri
 **Summary:**
 
 Subscribe to:
-- `/servo_serial` (Int32)
 - `/fire_command` (Bool)
 
 Interacts with:
 - Arduino via `/dev/serial/...` (USB)
 
 Sends:
-- Servo angle commands (window index)
-- FIRE command
+- Servo angle commands (window index) to ardunio 
+- FIRE command to arduino 
 
 <hr>
-
----
 
 ### VESC Node
 
 The **VESC node** acts as the main **motor driver interface** in our ROS2 system. It serves as the software bridge between ROS and the physical drivetrain hardware controlled by the VESC.
 
----
 
 ## Command Input (Subscribing to Motion Topics)
 
 The best_window topic determines the target row, which requires movement either forward, backward, or idle. The VESC node listens to those motion commands published by `/cmd_vel`.
 
----
 
 ## Command Translation (ROS → VESC Control)
 
 Once a command is received, the VESC node converts the ROS message into the low-level control signals that the VESC understands. This is what allows high-level ROS navigation or control logic to directly drive the motor without needing to handle hardware-level details.
 
----
-
 ## Feedback Output (State and Odometry Publishing)
 
 In addition to sending commands, the VESC node publishes feedback data back into ROS such as motor speed, voltage, current draw, and/or **odometry**. This feedback helps the system confirm the drivetrain is responding correctly and track how far the robot has moved.
 
----
 
 ## Why This Matters
 
 By separating motion commands from hardware control, the VESC node makes the drivetrain easier to control and debug. Other ROS nodes can focus on decision-making while the VESC node handles reliable motor execution and feedback. Therefore handles the forward and backward movement of the car needed for aiming the row.
 
----
 
 ### Brain Node
 
@@ -393,7 +378,10 @@ We used a simple 3D-printed design to hold the water cannon securely, then the s
 
 The baseplate layout was planned to leave:
 - enough space on top for the servo mount  
-- room for the targeting mechanism  
+- room for the targeting mechanism
+
+<div align="left">
+  <img src="Media/IMG_9346.jpg" height="500">
 
 ## Steering Lock for Accuracy
 
