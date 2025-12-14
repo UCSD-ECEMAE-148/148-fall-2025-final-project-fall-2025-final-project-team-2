@@ -65,7 +65,7 @@ The robot uses ROS2 with an OAK-D Lite camera for perception. Fire intensity is 
 - Estimate a fire intensity for each window.
 - Publish a structured list of targets to ROS2.
 - Compute the next best target using a custom score function.
-- Aim a single-servo turret toward the selected window and trigger suppression.
+- Aim a single-servo turret and acutated the drivetrain toward the selected window and trigger suppression.
 
 <hr>
 
@@ -73,14 +73,15 @@ The robot uses ROS2 with an OAK-D Lite camera for perception. Fire intensity is 
 ## Accomplishments
 - **Fire Perception Node**
   - Implemented ROI-based window extraction.
-  - Implemented red-intensity estimation.
-  - Can detect the presence of a personn ( based on another color that's in the window).
+  - Implemented red-orange-intensity estimation.
+  - Can detect the presence of a person ( based on a non red/orange color that's in the window).
   - Published a fire-node list containing window IDs, temperatures, and neighbor influence values.
 - **Decision-Making Node**
   - Implemented graph-based target representation.
-  - Implemented next-target selection using a custom score formulation (distance + intensity + neighbor effects + presence of a personn at the window).
+  - Implemented next-target selection using a custom score formulation (distance + intensity + neighbor effects + presence of a person at the window).
 - **Turret Control Node**
   - Implemented camera-based aiming for a 1-DOF turret.
+  - Implemented drivetrain contorl for y-position movement  m
   - Implemented servo PWM output with limits.
 
 <hr>
@@ -91,6 +92,7 @@ The robot uses ROS2 with an OAK-D Lite camera for perception. Fire intensity is 
   - Red detection is sensitive to illumination;
 - **System integration**
   - Ensuring consistent message timing and stable TF/frame assumptions across nodes.
+  - Having the Brain Node sequentially run the other nodes 
 - **Power and reliability**
   - Separating high-current actuator power (pump/motors) from logic power and filtering noise are critical for stable operation.
 <hr>
