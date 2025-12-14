@@ -172,7 +172,10 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 - Cardboard mock building with painted metal “windows”
 - 3D-printed mounts for camera and turret
 <div align="center">
-  <img src="MAE 148 team2/" height="500">
+  <img src="media/CameraMount.png" height="500">
+</div>
+<div align="center">
+  <img src="media/ServoMount.png" height="500">
 </div>
 
 <hr>
