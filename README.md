@@ -1,10 +1,17 @@
-<div align="center">Autonomous Firefighter Robot</div>
-<div align="center">ROS2-Based Perception, Decision-Making and Fire Suppression</div>
-<div align="center">Final Robotics Project</div>
+<h1 align="center">Autonomous Firefighter Robot</h1>
+<h3 align="center">ROS 2–Based Perception, Decision-Making, and Fire Suppression</h3>
+<h4 align="center">Final Robotics Project</h4>
+
+<br>
+
 <div align="center">
-  <img src="Media/RobotFullPhoto.webp" height="500">
+  <img src="Media/RobotFullPhoto.webp" height="420">
+</div>
+
+<br>
+
 <div align="center">
-  <img src="Media/logo.png" height="250">
+  <img src="Media/logo.png" height="120">
 </div>
 
 ## Table of Contents
@@ -35,8 +42,8 @@
 ## Team Members
 
 - **Natan Beneviste** — Mechanical Engineering
-- **Tanguy His** — Robotics Engineering
 - **Vivan Tran** — Computer Engineering
+- **Tanguy His** — Robotics Engineering
 - **Shanil Patel** - Aerospace Enigineering
 
 <hr>
@@ -157,6 +164,7 @@ Our turret has 1 servo. The camera is mounted ~5–6 cm in front of the turret b
 
 **Compute**
 - Raspberry Pi 5
+- Arduino Leondardo Micro 
 - MicroSD storage
 
 **Sensors**
