@@ -2,9 +2,9 @@
 <div align="center">ROS2-Based Perception, Decision-Making and Fire Suppression</div>
 <div align="center">Final Robotics Project</div>
 <div align="center">
-  <img src="Media/logo.png" height="500">
-<div align="center">
   <img src="Media/RobotFullPhoto.webp" height="500">
+<div align="center">
+  <img src="Media/logo.png" height="250">
 </div>
 
 ## Table of Contents
